@@ -322,8 +322,16 @@ def apply_import_sorting(
 
     new_imports = []
     for block in sorted_blocks:
+        local = []
         for import_obj in block:
-            new_imports.append(import_obj_to_s[import_obj])
+            if import_obj.module_base == '':
+                local.append(import_obj)
+            else:
+                new_imports.append(import_obj_to_s[import_obj])
+        if local:
+            new_imports.append('\n')
+            for import_obj in local:
+                new_imports.append(import_obj_to_s[import_obj])
 
         new_imports.append('\n')
 
